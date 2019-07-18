@@ -1,5 +1,10 @@
 # $Id: Makefile,v 1.36 2009/09/21 17:02:44 mascarenhas Exp $
 
+PLAT ?= linux
+PLATS = linux macosx
+
+
+
 T= lfs
 
 CONFIG= ./config
@@ -9,9 +14,21 @@ include $(CONFIG)
 SRCS= src/$T.c
 OBJS= src/$T.o
 
-lib: src/lfs.so
+.PHONY : default
 
-src/lfs.so: $(OBJS)
+default :
+	$(MAKE) $(PLAT)
+
+linux: PLAT = linux
+macosx: PLAT = macosx
+
+linux: LIB_OPTION= -shared 
+macosx: LIB_OPTION= -bundle -undefined dynamic_lookup
+
+
+linux macosx lib: src/lfs.so
+
+linux macosx src/lfs.so: $(OBJS)
 	MACOSX_DEPLOYMENT_TARGET="10.14"; export MACOSX_DEPLOYMENT_TARGET; $(CC) $(LIB_OPTION) -o src/lfs.so $(OBJS)
 
 test: lib
