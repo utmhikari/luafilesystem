@@ -19,8 +19,14 @@ LuaFileSystem is free software and uses the same license as Lua 5.x (MIT).
 
 # LuaRocks Installation
 
-```
+```plain
 luarocks install luafilesystem
+```
+
+# Makefile Installation
+
+```plain
+make linux or macosx
 ```
 
 # Documentation
