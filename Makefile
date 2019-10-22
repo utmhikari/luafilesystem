@@ -2,7 +2,7 @@
 
 PLAT ?= linux
 PLATS = linux macosx
-
+MACOS_TARGET ?= "10.14"
 
 
 T= lfs
@@ -29,7 +29,7 @@ macosx: LIB_OPTION= -bundle -undefined dynamic_lookup
 linux macosx lib: src/lfs.so
 
 linux macosx src/lfs.so: $(OBJS)
-	MACOSX_DEPLOYMENT_TARGET="10.14"; export MACOSX_DEPLOYMENT_TARGET; $(CC) $(LIB_OPTION) -o src/lfs.so $(OBJS)
+	MACOSX_DEPLOYMENT_TARGET=$(MACOS_TARGET); export MACOSX_DEPLOYMENT_TARGET; $(CC) $(LIB_OPTION) -o src/lfs.so $(OBJS)
 
 test: lib
 	LUA_CPATH=./src/?.so lua tests/test.lua
